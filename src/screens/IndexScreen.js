@@ -1,10 +1,17 @@
 import React, { useContext } from "react";
-import { View, Text, StyleSheet, FlatList, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { Context as BlogContext } from "../context/BlogContext";
 import { AntDesign } from "@expo/vector-icons";
 
 const indexScreen = () => {
-  const { state, addBlogPost } = useContext(BlogContext);
+  const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
   return (
     <View>
       <Button title="Add Post" onPress={addBlogPost} />
@@ -14,8 +21,12 @@ const indexScreen = () => {
         renderItem={({ item }) => {
           return (
             <View style={styles.row}>
-              <Text style={styles.title}>{item.title}</Text>
-              <AntDesign name="delete" size={24} color="red" />
+              <Text style={styles.title}>
+                {item.title} - {item.id}
+              </Text>
+              <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                <AntDesign name="delete" size={24} color="red" />
+              </TouchableOpacity>
             </View>
           );
         }}
