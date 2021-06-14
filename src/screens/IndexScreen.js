@@ -10,11 +10,10 @@ import {
 import { Context as BlogContext } from "../context/BlogContext";
 import { AntDesign } from "@expo/vector-icons";
 
-const indexScreen = ({ navigation }) => {
-  const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
+const IndexScreen = ({ navigation }) => {
+  const { state, deleteBlogPost } = useContext(BlogContext);
   return (
     <View>
-      <Button title="Add Post" onPress={addBlogPost} />
       <FlatList
         data={state}
         keyExtractor={(blogPosts) => blogPosts.title}
@@ -39,6 +38,16 @@ const indexScreen = ({ navigation }) => {
   );
 };
 
+IndexScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate("Create")}>
+        <AntDesign name="plus" size={30} />
+      </TouchableOpacity>
+    ),
+  };
+};
+
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
@@ -54,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default indexScreen;
+export default IndexScreen;
