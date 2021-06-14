@@ -10,7 +10,7 @@ import {
 import { Context as BlogContext } from "../context/BlogContext";
 import { AntDesign } from "@expo/vector-icons";
 
-const indexScreen = () => {
+const indexScreen = ({ navigation }) => {
   const { state, addBlogPost, deleteBlogPost } = useContext(BlogContext);
   return (
     <View>
@@ -20,14 +20,18 @@ const indexScreen = () => {
         keyExtractor={(blogPosts) => blogPosts.title}
         renderItem={({ item }) => {
           return (
-            <View style={styles.row}>
-              <Text style={styles.title}>
-                {item.title} - {item.id}
-              </Text>
-              <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                <AntDesign name="delete" size={24} color="red" />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Show", { id: item.id })}
+            >
+              <View style={styles.row}>
+                <Text style={styles.title}>
+                  {item.title} - {item.id}
+                </Text>
+                <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
+                  <AntDesign name="delete" size={24} color="red" />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           );
         }}
       />
