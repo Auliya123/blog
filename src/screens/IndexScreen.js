@@ -1,24 +1,42 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, FlatList, Button } from "react-native";
 import { Context as BlogContext } from "../context/BlogContext";
+import { AntDesign } from "@expo/vector-icons";
 
 const indexScreen = () => {
   const { state, addBlogPost } = useContext(BlogContext);
   return (
     <View>
-      <Text>Index screen</Text>
       <Button title="Add Post" onPress={addBlogPost} />
       <FlatList
         data={state}
         keyExtractor={(blogPosts) => blogPosts.title}
         renderItem={({ item }) => {
-          return <Text>{item.title}</Text>;
+          return (
+            <View style={styles.row}>
+              <Text style={styles.title}>{item.title}</Text>
+              <AntDesign name="delete" size={24} color="red" />
+            </View>
+          );
         }}
       />
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 20,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "gray",
+    paddingHorizontal: 10,
+  },
+  title: {
+    fontSize: 18,
+  },
+});
 
 export default indexScreen;
